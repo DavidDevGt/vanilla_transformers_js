@@ -108,3 +108,58 @@ p {
     font-weight: 500;
     margin-top: 10px;
 }
+
+/* Media Queries para diferentes tamaños de pantalla */
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+        padding: 15px;
+    }
+
+    .custom-file-upload {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 2px dashed #007bff;
+        padding: 12px 24px;
+        cursor: pointer;
+        border-radius: 6px;
+        background-color: #e7f1ff;
+        margin: 20px auto;
+        max-width: 300px;
+    }
+
+    .upload-icon {
+        margin-bottom: 10px;
+    }
+
+    #clear-selection {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .custom-file-upload {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 2px dashed #007bff;
+        padding: 12px 24px;
+        cursor: pointer;
+        border-radius: 6px;
+        background-color: #e7f1ff;
+        margin: 20px auto;
+        max-width: 300px;
+    }
+
+    .upload-icon {
+        width: 30px;
+    }
+
+    p {
+        margin-top: 10px;
+    }
+}
