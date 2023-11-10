@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Proyecto Transformers.js</title>
-  <link rel="stylesheet" href="main.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;500;700&display=swap" rel="stylesheet" />
-</head>
-<body>
-  <main class="container">
-    <p>Selecciona una imagen y el modelo detectará objetos en ella.</p>
-    <label for="file-upload" class="custom-file-upload">
-      <input id="file-upload" type="file" accept="image/*" />
-      <img class="upload-icon" src="https://huggingface.co/datasets/Xenova/transformers.js-docs/resolve/main/upload-icon.png" alt="Subir imagen" />
-      Subir imagen
-    </label>
-    <button id="clear-selection">Limpiar Selección</button>
-    <div id="progress-bar-container">
-      <div id="progress-bar"></div>
-    </div>
-    <div id="image-container"></div>
-    <p id="status"></p>
-  </main>
-  <script src="index.js" type="module"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Proyecto de detección de objetos con Transformers.js y modelo DETR-ResNet-50"
+    />
+    <meta
+      name="keywords"
+      content="Transformers.js, DETR, ResNet-50, Detección de Objetos, AI, Inteligencia Artificial"
+    />
+    <title>Proyecto Transformers.js - Detección de Objetos</title>
+    <link rel="stylesheet" href="main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <section>
+        <p>Selecciona una imagen y el modelo detectará objetos en ella.</p>
+        <label for="file-upload" class="custom-file-upload">
+          <input id="file-upload" type="file" accept="image/*" />
+          <img
+            class="upload-icon"
+            src="https://huggingface.co/datasets/Xenova/transformers.js-docs/resolve/main/upload-icon.png"
+            alt="Subir imagen"
+          />
+          Subir imagen
+        </label>
+        <button id="clear-selection">Limpiar Selección</button>
+      </section>
+      <section id="image-container"></section>
+      <footer>
+        <p id="status"></p>
+      </footer>
+    </main>
+    <script src="index.js" type="module"></script>
+  </body>
 </html>

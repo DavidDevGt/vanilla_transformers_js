@@ -1,80 +1,88 @@
-import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.6.0";
+import {
+  pipeline,
+  env,
+} from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.6.0";
 
-// No permitir modelos locales
 env.allowLocalModels = false;
 
-// Variables para manipular el DOM
 const fileUpload = document.getElementById("file-upload");
 const clearSelectionButton = document.getElementById("clear-selection");
 const imageContainer = document.getElementById("image-container");
 const progressBar = document.getElementById("progress-bar");
 const status = document.getElementById("status");
-const resultsSummary = document.getElementById("results-summary");
 
-// Mensaje de espera, luego llamar a la pipeline
-status.textContent = "Cargando modelo de detección de objetos...";
-const detector = await pipeline("object-detection", "Xenova/detr-resnet-50");
+let detector;
 
-// Cuando retorne el modelo, cambiar el mensaje
-status.textContent = "Modelo cargado. ¡Sube una imagen para empezar!";
+async function loadModel() {
+  status.textContent = "Cargando modelo de detección de objetos...";
+  detector = await pipeline("object-detection", "Xenova/detr-resnet-50");
+  status.textContent = "Modelo cargado. ¡Sube una imagen para empezar!";
+}
 
-// Crear la lógica para cargar la imagen
+function updateProgressBar(progress) {
+  progressBar.style.width = `${progress}%`;
+}
+
+function resetApplication() {
+  fileUpload.value = "";
+  imageContainer.innerHTML = "";
+  status.textContent = "Modelo cargado. ¡Sube una imagen para empezar!";
+  updateProgressBar(0);
+}
+
 fileUpload.addEventListener("change", async function (e) {
   const file = e.target.files[0];
   if (!file) {
     status.textContent = "No se seleccionó ninguna imagen.";
-    progressBar.style.width = '0%';
+    updateProgressBar(0);
     return;
   }
+  readAndDetectImage(file);
+});
+
+clearSelectionButton.addEventListener("click", resetApplication);
+
+async function readAndDetectImage(file) {
   status.textContent = "Cargando imagen...";
-  progressBar.style.width = '50%'; // 50% para cargar imagen
+  updateProgressBar(10); // pequeño progreso por la carga de la imagen
 
   const reader = new FileReader();
-
-  reader.onload = async function (e2) {
-    imageContainer.innerHTML = "";
-    const image = new Image();
-    image.src = e2.target.result;
-    image.onload = async () => {
-      imageContainer.appendChild(image);
-      status.textContent = "Analizando imagen...";
-      progressBar.style.width = '75%'; // 75% para analizar imagen
-      await detect(image);
-    };
+  reader.onload = async function (e) {
+    displayImage(e.target.result);
+    await detectObjects(e.target.result);
   };
   reader.readAsDataURL(file);
-});
+}
 
-// Botón para limpiar selección
-clearSelectionButton.addEventListener('click', function() {
-  fileUpload.value = ''; // Limpiar input
-  imageContainer.innerHTML = ''; // Limpiar contenedor de imagen
-  status.textContent = 'Modelo cargado. ¡Sube una imagen para empezar!';
-  progressBar.style.width = '0%'; // Reiniciar barra de progreso
-  resultsSummary.innerHTML = ''; // Limpiar resumen de resultados
-});
+function displayImage(imageSrc) {
+  imageContainer.innerHTML = "";
+  const image = new Image();
+  image.src = imageSrc;
+  imageContainer.appendChild(image);
+  updateProgressBar(30); // Progreso por haber cargado la imagen en el contenedor
+}
 
-// Con el modelo cargado, detectar objetos
-async function detect(img) {
-  const output = await detector(img.src, {
-    threshold: 0.5,
-    percentage: true,
-  });
-  progressBar.style.width = '100%'; // 100% al finalizar análisis
+async function detectObjects(imageSrc) {
+  status.textContent = "Analizando imagen...";
+  updateProgressBar(50); // Progreso inicial del análisis
+
+  const output = await detector(imageSrc, { threshold: 0.5, percentage: true });
+  updateProgressBar(100); // Completar la barra al terminar el análisis
+
   if (output.length === 0) {
     status.textContent = "No se detectaron objetos en la imagen.";
-    resultsSummary.innerHTML = '<p>No se encontraron objetos.</p>';
   } else {
     status.textContent = `Se detectaron ${output.length} objetos.`;
     output.forEach(renderBox);
-    resultsSummary.innerHTML = `<p>Se encontraron ${output.length} objetos.</p>`;
   }
 }
-
-// Esto genera el cuadro de la detección
 function renderBox({ box, label }) {
   const { xmax, xmin, ymax, ymin } = box;
-  const color = "#" + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, "0");
+  const color =
+    "#" +
+    Math.floor(Math.random() * 0xffffff)
+      .toString(16)
+      .padStart(6, "0");
   const boxElement = document.createElement("div");
   boxElement.className = "bounding-box";
   Object.assign(boxElement.style, {
@@ -84,7 +92,6 @@ function renderBox({ box, label }) {
     width: `${100 * (xmax - xmin)}%`,
     height: `${100 * (ymax - ymin)}%`,
   });
-
   const labelElement = document.createElement("span");
   labelElement.textContent = label;
   labelElement.className = "bounding-box-label";
@@ -92,3 +99,5 @@ function renderBox({ box, label }) {
   boxElement.appendChild(labelElement);
   imageContainer.appendChild(boxElement);
 }
+
+loadModel();
