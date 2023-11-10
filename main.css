@@ -19,7 +19,7 @@ body {
     border: 2px solid black;
     padding: 8px 16px;
     cursor: pointer;
-    border-radius: 6px;
+	border-radius: 6px;
 }
 
 #file-upload {
@@ -38,4 +38,20 @@ body {
 
 #image-container>img {
     width: 100%;
+}
+
+.bounding-box {
+    position: absolute;
+    box-sizing: border-box;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.bounding-box-label {
+    color: white;
+    position: absolute;
+    font-size: 12px;
+    margin-top: -16px;
+    margin-left: -2px;
+    padding: 1px;
 }
