@@ -10,11 +10,13 @@ const clearSelectionButton = document.getElementById("clear-selection");
 const imageContainer = document.getElementById("image-container");
 const status = document.getElementById("status");
 
-let detector;
+let detector = null;
+let isModelLoaded = false;
 
 async function loadModel() {
   updateStatus("Cargando modelo de detección de objetos...");
   detector = await pipeline("object-detection", "Xenova/detr-resnet-50");
+  isModelLoaded = true;
   updateStatus("Modelo cargado. ¡Sube una imagen para empezar!");
 }
 
@@ -25,10 +27,19 @@ function updateStatus(message) {
 function resetApplication() {
   fileUpload.value = "";
   imageContainer.innerHTML = "";
-  updateStatus("Modelo cargado. ¡Sube una imagen para empezar!");
+  if (isModelLoaded) {
+    updateStatus("Modelo cargado. ¡Sube una imagen para empezar!");
+  } else {
+    updateStatus("Cargando modelo de detección de objetos...");
+  }
 }
 
 fileUpload.addEventListener("change", async function (e) {
+  if (!isModelLoaded) {
+    alert("Por favor espera a que el modelo termine de cargar.");
+    return;
+  }
+
   const file = e.target.files[0];
   if (!file) {
     updateStatus("No se seleccionó ninguna imagen.");
