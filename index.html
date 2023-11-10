@@ -1,24 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Transformers.js First Project</title>
-    <link rel="stylesheet" href="main.css">
-  </head>
-  <body>
-    <main class="container">
-      <label class="custom-file-upload">
-        <input id="file-upload" type="file" accept="image/*" />
-        <img
-          class="upload-icon"
-          src="https://huggingface.co/datasets/Xenova/transformers.js-docs/resolve/main/upload-icon.png"
-        />
-        Upload image
-      </label>
-      <div id="image-container"></div>
-      <p id="status"></p>
-    </main>
-    <script src="index.js" type="module"></script>
-  </body>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proyecto Transformers.js</title>
+  <link rel="stylesheet" href="main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;500;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <main class="container">
+    <p>Selecciona una imagen y el modelo detectará objetos en ella.</p>
+    <label for="file-upload" class="custom-file-upload">
+      <input id="file-upload" type="file" accept="image/*" />
+      <img class="upload-icon" src="https://huggingface.co/datasets/Xenova/transformers.js-docs/resolve/main/upload-icon.png" alt="Subir imagen" />
+      Subir imagen
+    </label>
+    <button id="clear-selection" style="margin-top: 10px;">Limpiar Selección</button>
+    <div id="progress-bar-container" style="width: 100%; height: 20px; background-color: #ddd; margin-top: 10px;">
+      <div id="progress-bar" style="height: 100%; width: 0%; background-color: #007bff;"></div>
+    </div>
+    <div id="image-container"></div>
+    <p id="status"></p>
+  </main>
+  <script src="index.js" type="module"></script>
+</body>
 </html>
