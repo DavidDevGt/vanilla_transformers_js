@@ -26,12 +26,21 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
   </head>
   <body>
-    <main class="container">
+    <main class="container animate__animated animate__fadeIn">
       <section>
-        <p>Selecciona una imagen y el modelo detectará objetos en ella.</p>
-        <label for="file-upload" class="custom-file-upload">
+        <p class="animate__animated animate__fadeInDown">
+          Selecciona una imagen y el modelo detectará objetos en ella.
+        </p>
+        <label
+          for="file-upload"
+          class="custom-file-upload animate__animated animate__fadeIn"
+        >
           <input id="file-upload" type="file" accept="image/*" />
           <img
             class="upload-icon"
@@ -40,11 +49,20 @@
           />
           Subir imagen
         </label>
-        <button id="clear-selection">Limpiar Selección</button>
+        <button
+          id="clear-selection"
+          class="animate__animated animate__bounceIn"
+          style="display: none"
+        >
+          Limpiar Selección
+        </button>
       </section>
-      <section id="image-container"></section>
+      <section
+        id="image-container"
+        class="animate__animated animate__fadeInUp"
+      ></section>
       <footer>
-        <p id="status"></p>
+        <p id="status" class="animate__animated animate__fadeInUp"></p>
       </footer>
     </main>
     <script src="index.js" type="module"></script>

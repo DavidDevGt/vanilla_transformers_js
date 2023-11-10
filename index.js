@@ -27,6 +27,7 @@ function updateStatus(message) {
 function resetApplication() {
   fileUpload.value = "";
   imageContainer.innerHTML = "";
+  clearSelectionButton.style.display = "none"; // Ocultar el botón al resetear
   if (isModelLoaded) {
     updateStatus("Modelo cargado. ¡Sube una imagen para empezar!");
   } else {
@@ -66,6 +67,7 @@ function displayImage(imageSrc) {
   image.src = imageSrc;
   imageContainer.appendChild(image);
   updateStatus("Imagen cargada. Analizando...");
+  clearSelectionButton.style.display = "block"; // Mostrar el botón cuando se carga una imagen
 }
 
 async function detectObjects(imageSrc) {
@@ -102,4 +104,5 @@ function renderBox({ box, label }) {
   imageContainer.appendChild(boxElement);
 }
 
+resetApplication();
 loadModel();
