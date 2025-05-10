@@ -1,19 +1,23 @@
-html, body {
-    font-family: 'Sora', Arial, Helvetica, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+html,
+body {
+    height: 100%;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    font-family: 'Sora', Arial, Helvetica, sans-serif;
 }
 
 .container {
+    width: 100%;
     max-width: 800px;
-    margin: 40px auto;
     padding: 20px;
     background: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    margin: 0;
 }
 
 p {
@@ -72,7 +76,7 @@ p {
     position: relative;
 }
 
-#image-container > img {
+#image-container>img {
     width: 100%;
     height: auto;
     border-radius: 4px;
@@ -107,6 +111,21 @@ p {
     text-align: center;
     font-weight: 500;
     margin-top: 10px;
+}
+
+.loader {
+  border: 6px solid #e0e0e0;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+  margin: 40px auto;
+  display: block;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Media Queries para diferentes tamaños de pantalla */
