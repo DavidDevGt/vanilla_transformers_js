@@ -1,39 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Aplicación de detección de objetos usando Transformers.js y el modelo DETR-ResNet-50">
+    <meta name="description"
+        content="Aplicación de detección de objetos usando Transformers.js y el modelo DETR-ResNet-50">
     <meta name="keywords" content="Transformers.js, DETR, ResNet-50, Detección de Objetos, AI, Inteligencia Artificial">
     <meta name="author" content="Mejorado según normas NASA">
     <meta name="theme-color" content="#4285f4">
-    
+
     <title>Detector de Objetos con IA | Transformers.js</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    
-    <link rel="stylesheet" href="main.css">
+
+    <link rel="stylesheet" href="styles/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link 
-        rel="stylesheet" 
-        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" 
-        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" 
-        crossorigin="anonymous" 
-        referrerpolicy="no-referrer"
-    >
-    <link 
-        rel="stylesheet" 
-        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" 
-        integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw==" 
-        crossorigin="anonymous" 
-        referrerpolicy="no-referrer"
-    >
-    
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔍</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔍</text></svg>">
 </head>
+
 <body>
 
 
@@ -43,9 +39,10 @@
                 <p class="animate__animated animate__fadeInDown">
                     Selecciona una imagen y el modelo detectará automáticamente los objetos en ella.
                 </p>
-                
+
                 <div class="status-container">
-                    <div id="status" class="status-message animate__animated animate__fadeInUp" role="status" aria-live="polite"></div>
+                    <div id="status" class="status-message animate__animated animate__fadeInUp" role="status"
+                        aria-live="polite"></div>
                     <div class="progress-container" id="progress-container" style="display: none;">
                         <div class="progress-bar" id="progress-bar"></div>
                     </div>
@@ -53,29 +50,18 @@
             </div>
 
             <div class="controls">
-                <label for="file-upload" class="custom-file-upload animate__animated animate__fadeIn" role="button" tabindex="0">
-                    <input 
-                        id="file-upload" 
-                        type="file" 
-                        accept="image/*" 
-                        aria-label="Seleccionar imagen para detectar objetos"
-                        aria-describedby="file-format-info"
-                    >
-                    <img
-                        class="upload-icon"
+                <label for="file-upload" class="custom-file-upload animate__animated animate__fadeIn" role="button"
+                    tabindex="0">
+                    <input id="file-upload" type="file" accept="image/*"
+                        aria-label="Seleccionar imagen para detectar objetos" aria-describedby="file-format-info">
+                    <img class="upload-icon"
                         src="https://huggingface.co/datasets/Xenova/transformers.js-docs/resolve/main/upload-icon.png"
-                        alt=""
-                        aria-hidden="true"
-                    >
+                        alt="" aria-hidden="true">
                     <span>Subir imagen</span>
                 </label>
-                
-                <button
-                    id="clear-selection"
-                    class="clear-button animate__animated animate__bounceIn"
-                    style="display: none"
-                    aria-label="Limpiar la imagen seleccionada"
-                >
+
+                <button id="clear-selection" class="clear-button animate__animated animate__bounceIn"
+                    style="display: none" aria-label="Limpiar la imagen seleccionada">
                     Limpiar Selección
                 </button>
             </div>
@@ -85,9 +71,10 @@
         <div id="loader" class="loader" style="display:none;"></div>
 
         <section class="detection-section">
-            <div id="image-container" class="image-result-container animate__animated animate__fadeInUp" aria-live="polite"></div>
+            <div id="image-container" class="image-result-container animate__animated animate__fadeInUp"
+                aria-live="polite"></div>
         </section>
-        
+
         <section class="results-section" id="results-section" style="display: none;">
             <h2>Objetos Detectados</h2>
             <div id="objects-list" class="objects-list"></div>
@@ -95,12 +82,9 @@
     </main>
 
     <script src="index.js" type="module"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-    ></script>
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         toastr.options = {
             closeButton: true,
@@ -108,16 +92,13 @@
             positionClass: "toast-bottom-right",
             timeOut: 5000
         };
-    </script>
-    <script>
-        // Funciones para mostrar y ocultar el loader
         function showLoader() {
             document.getElementById('loader').style.display = 'block';
         }
         function hideLoader() {
             document.getElementById('loader').style.display = 'none';
         }
-        // Ejemplo: Llama showLoader() antes del análisis y hideLoader() después de obtener el resultado
     </script>
 </body>
+
 </html>
